@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { LinkStats } from '@/features/stats/LinkStats'
 import { formatDate } from '@/lib/format'
-import { shortLinkLabel } from '@/lib/short-link'
+import { SHORT_LINK_PREFIX } from '@/lib/short-link'
 import { CopyButton } from './CopyButton'
 import { DeleteLinkButton } from './DeleteLinkButton'
 import { LinkForm } from './LinkForm'
@@ -67,7 +67,10 @@ export function LinkDetailsPage() {
 
       <header className="mt-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
         <div className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2">
-          <h1 className="link-text text-2xl font-bold sm:text-3xl">{shortLinkLabel(data.slug)}</h1>
+          <h1 className="link-text text-2xl font-bold sm:text-3xl">
+            <span className="font-normal text-muted-foreground">{SHORT_LINK_PREFIX}</span>
+            {data.slug}
+          </h1>
           <LinkStatus link={data} />
         </div>
         <div className="flex items-center gap-1">

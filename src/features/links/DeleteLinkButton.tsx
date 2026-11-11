@@ -1,3 +1,4 @@
+import { Trash2Icon } from 'lucide-react'
 import { toast } from 'sonner'
 import type { Link } from '@/api/types'
 import {
@@ -15,7 +16,9 @@ import { Button } from '@/components/ui/button'
 import { shortLinkLabel } from '@/lib/short-link'
 import { useDeleteLink } from './queries'
 
-export function DeleteLinkButton({ link, onDeleted }: { link: Link; onDeleted?: () => void }) {
+type DeleteLinkButtonProps = { link: Link; onDeleted?: () => void; iconOnly?: boolean }
+
+export function DeleteLinkButton({ link, onDeleted, iconOnly }: DeleteLinkButtonProps) {
   const deleteLink = useDeleteLink()
   const label = shortLinkLabel(link.slug)
 
@@ -32,8 +35,15 @@ export function DeleteLinkButton({ link, onDeleted }: { link: Link; onDeleted?: 
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="ghost" disabled={deleteLink.isPending} aria-label={`Delete ${label}`}>
-          {deleteLink.isPending ? 'Deleting…' : 'Delete'}
+        <Button
+          variant="ghost"
+          size={iconOnly ? 'icon' : 'default'}
+          disabled={deleteLink.isPending}
+          aria-label={`Delete ${label}`}
+          title={iconOnly ? 'Delete' : undefined}
+          className="hover:bg-destructive/15 hover:text-destructive"
+        >
+          {iconOnly ? <Trash2Icon /> : deleteLink.isPending ? 'Deleting…' : 'Delete'}
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>

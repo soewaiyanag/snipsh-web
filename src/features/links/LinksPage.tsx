@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { formatNumber } from '@/lib/format'
 import { shortLinkLabel } from '@/lib/short-link'
+import { cn } from '@/lib/utils'
 import { LinkForm } from './LinkForm'
 import { LinkRow } from './LinkRow'
 import { LINKS_PAGE_SIZE, useCreateLink, useLinks } from './queries'
@@ -34,7 +35,14 @@ export function LinksPage() {
 
   return (
     <div className="pt-6 sm:pt-10">
-      <h1 className="text-3xl font-semibold tracking-tight">Your links</h1>
+      <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+        <h1 className="text-3xl font-semibold tracking-tight">Your links</h1>
+        {total > 0 && (
+          <p className="text-sm text-muted-foreground tabular-nums">
+            {formatNumber(total)} {total === 1 ? 'link' : 'links'}, newest first
+          </p>
+        )}
+      </div>
 
       <section aria-label="Make a short link" className="sheet mt-6 p-5">
         <LinkForm
@@ -43,7 +51,7 @@ export function LinksPage() {
           submitLabel="Shorten"
           submittingLabel="Shortening…"
           slugLabel="Slug (optional)"
-          slugHint="Leave empty and one is made for you."
+          slugPlaceholder="made for you if empty"
           onSubmit={async ({ url, slug }) => {
             const link = await createLink.mutateAsync({ url, slug: slug || undefined })
             setNewLinkId(link.id)
@@ -88,12 +96,9 @@ export function LinksPage() {
           </div>
         ) : (
           <>
-            <p className="pb-3 text-sm text-muted-foreground tabular-nums">
-              {formatNumber(total)} {total === 1 ? 'link' : 'links'}, newest first
-            </p>
             <ul
               aria-label="Your links"
-              className={links.isPlaceholderData ? 'divide-y border-y opacity-60' : 'divide-y border-y'}
+              className={cn('-mx-4 divide-y border-y', links.isPlaceholderData && 'opacity-60')}
             >
               {links.data.items.map((link) => (
                 <LinkRow key={link.id} link={link} isNew={link.id === newLinkId} />

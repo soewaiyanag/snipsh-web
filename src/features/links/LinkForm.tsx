@@ -16,7 +16,7 @@ type LinkFormProps = {
   submitLabel: string
   submittingLabel: string
   slugLabel: string
-  slugHint?: string
+  slugPlaceholder?: string
   onSubmit: (values: LinkFormValues) => Promise<void>
   onCancel?: () => void
 }
@@ -28,7 +28,7 @@ export function LinkForm({
   submitLabel,
   submittingLabel,
   slugLabel,
-  slugHint,
+  slugPlaceholder,
   onSubmit,
   onCancel,
 }: LinkFormProps) {
@@ -84,7 +84,7 @@ export function LinkForm({
           autoCapitalize="none"
           spellCheck={false}
           prefix={SHORT_LINK_PREFIX}
-          hint={slugHint}
+          placeholder={slugPlaceholder}
           inputClassName="link-text"
           error={errors.slug?.message}
           {...register('slug')}
