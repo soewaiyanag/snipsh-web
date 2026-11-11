@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { Link } from 'react-router'
 import { urlSchema } from '@/api/schemas'
+import { Ridgeline } from '@/components/Ridgeline'
 import { Button } from '@/components/ui/button'
 import { env } from '@/env'
 import { useAuth } from '@/features/auth/auth-context'
@@ -41,23 +42,25 @@ export function LandingPage() {
 
   return (
     <div className="relative">
-      {/* One soft light behind the hero. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute top-16 left-1/2 -z-10 h-112 w-screen -translate-x-1/2 bg-[radial-gradient(42%_52%_at_50%_48%,var(--glow),transparent_72%)]"
-      />
+        className="pointer-events-none absolute -top-16 left-1/2 -z-10 h-192 w-screen -translate-x-1/2 overflow-hidden"
+      >
+        {/* The light sits behind the plot, so the lines stand against it as a dark horizon. */}
+        <div className="absolute inset-0 bg-[radial-gradient(56%_58%_at_50%_64%,var(--glow),transparent_74%)]" />
+        <Ridgeline className="absolute inset-x-0 bottom-0 h-60 w-full sm:h-104" />
+      </div>
 
-      <section className="mx-auto flex max-w-4xl flex-col items-center pt-14 text-center sm:pt-24">
+      <section className="mx-auto flex max-w-3xl flex-col items-center pt-14 text-center sm:pt-24">
         <h1 className="text-[2.6rem] leading-[1.05] font-bold tracking-tight text-balance sm:text-7xl">
           Long links, cut short.
         </h1>
-
-        <p className="mt-5 max-w-xl text-lg text-pretty text-muted-foreground">
+        <p className="mt-5 max-w-xl text-lg text-pretty text-muted-foreground dark:text-foreground/90">
           SnipShort turns any long URL into a short link you can share, and counts every click it
           gets.
         </p>
 
-        <form onSubmit={showPreview} noValidate className="mt-8 w-full max-w-2xl">
+        <form onSubmit={showPreview} noValidate className="mt-10 w-full max-w-2xl">
           <div className="flex items-center gap-2 rounded-full border border-input bg-card p-1.5 pl-5 transition-shadow focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50">
             <label htmlFor="preview-url" className="sr-only">
               Long URL to preview
@@ -80,12 +83,15 @@ export function LandingPage() {
             </Button>
           </div>
 
-          <div id="preview-result" aria-live="polite" className="mt-4 min-h-10">
+          <div id="preview-result" aria-live="polite" className="mt-4 min-h-16">
             {preview && 'error' in preview && (
               <p className="text-sm text-destructive">{preview.error}</p>
             )}
             {preview && 'slug' in preview && (
-              <p className="mx-auto flex w-fit max-w-full flex-wrap items-center justify-center gap-x-4 gap-y-1 rounded-xl border bg-card px-5 py-3">
+              <p
+                key={preview.slug}
+                className="mx-auto flex w-fit max-w-full animate-in flex-wrap items-center justify-center gap-x-4 gap-y-1 rounded-xl border bg-card px-5 py-3 duration-200 zoom-in-95 fade-in-0"
+              >
                 <span className="link-text text-xl font-bold">{shortLinkLabel(preview.slug)}</span>
                 <span className="text-sm text-muted-foreground">
                   A preview only.{' '}
@@ -99,16 +105,14 @@ export function LandingPage() {
           </div>
         </form>
 
-        <Button asChild size="lg" className="bg-foreground text-background hover:bg-foreground/85">
-          {env.useMocks && !isAuthenticated ? (
+        {env.useMocks && !isAuthenticated && (
+          <Button asChild variant="contrast" size="lg">
             <Link to="/login">Explore the demo account</Link>
-          ) : (
-            <Link to={start.to}>{start.label}</Link>
-          )}
-        </Button>
+          </Button>
+        )}
       </section>
 
-      <section aria-labelledby="what-it-does" className="mt-24 sm:mt-32">
+      <section aria-labelledby="what-it-does" className="mt-60 sm:mt-80">
         <h2 id="what-it-does" className="text-2xl font-semibold tracking-tight sm:text-3xl">
           What it does
         </h2>

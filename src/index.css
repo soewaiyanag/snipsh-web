@@ -32,7 +32,22 @@
   --radius-xl: 1.25rem;
   --radius-2xl: 1.5rem;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-trace: trace 1.6s var(--ease-out-expo) both;
   --animate-settle: settle 2.4s ease-out both;
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* Buttons are keys: a lit top edge, a shaded bottom edge and a soft shadow that collapses on press. */
+  --shadow-key: inset 0 1px 0.5px oklch(1 0 0 / 0.32), inset 0 -2px 3px oklch(0 0 0 / 0.26),
+    0 10px 22px -10px var(--primary);
+  --shadow-key-contrast: inset 0 -2px 3px oklch(0 0 0 / 0.2),
+    0 10px 24px -12px color-mix(in oklch, var(--foreground) 60%, transparent);
+  --shadow-key-quiet: inset 0 1px 0.5px oklch(1 0 0 / 0.1), inset 0 -1px 2px oklch(0 0 0 / 0.28);
+  --shadow-key-pressed: inset 0 2px 5px oklch(0 0 0 / 0.38);
+
+  @keyframes trace {
+    from {
+      stroke-dashoffset: 1;
+    }
+  }
 
   @keyframes settle {
     from {
@@ -82,7 +97,7 @@
     --border: oklch(0.29 0.03 268);
     --input: oklch(0.55 0.04 268);
     --ring: oklch(0.76 0.14 268);
-    --glow: oklch(0.47 0.29 266 / 0.42);
+    --glow: oklch(0.47 0.29 266);
   }
 }
 
