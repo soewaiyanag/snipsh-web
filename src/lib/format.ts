@@ -8,3 +8,14 @@ export function formatDate(iso: string) {
 export function formatNumber(value: number) {
   return numberFormat.format(value)
 }
+
+// Stats days arrive as "YYYY-MM-DD", which parses as UTC; format in UTC so the day never shifts.
+const dayFormat = new Intl.DateTimeFormat(undefined, {
+  month: 'short',
+  day: 'numeric',
+  timeZone: 'UTC',
+})
+
+export function formatDay(date: string) {
+  return dayFormat.format(new Date(date))
+}
