@@ -44,7 +44,7 @@ export function LandingPage() {
     <div className="relative">
       <HorizonArc />
 
-      <section className="mx-auto flex min-h-[max(calc(100svh-4rem),41rem)] max-w-3xl flex-col items-center pt-14 text-center sm:pt-24">
+      <section className="mx-auto flex min-h-[max(calc(100svh-4rem),48rem)] max-w-3xl flex-col items-center pt-14 text-center sm:pt-24">
         <h1 className="text-[2.6rem] leading-[1.05] font-bold tracking-tight text-balance sm:text-7xl">
           Long links, cut short.
         </h1>
