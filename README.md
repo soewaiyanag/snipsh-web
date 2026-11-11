@@ -26,7 +26,7 @@ The login page has a button that fills these in.
 | Variable | Example | Purpose |
 |---|---|---|
 | `VITE_API_URL` | `http://localhost:3000` | Base URL of the API. |
-| `VITE_SHORT_DOMAIN` | `http://localhost:3000` | Base of every short link shown in the app. Use `https://snipsh.com` in production. |
+| `VITE_SHORT_DOMAIN` | `https://snipsh.com` | Base of every short link shown in the app. Set it to `http://localhost:3000` to test redirects against a local API. |
 | `VITE_USE_MOCKS` | `true` | `true` answers API calls in the browser with MSW. `false` calls the real API. |
 
 They are read and validated once, in `src/env.ts`. The app refuses to start if one is missing or malformed. `.env` is not committed; `.env.example` is.
