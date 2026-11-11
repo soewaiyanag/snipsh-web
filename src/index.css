@@ -37,10 +37,10 @@
   --shadow-halo: 0 0 0 4px var(--background), 0 0 0 6px var(--ring),
     0 0 28px 6px color-mix(in oklch, var(--primary) 70%, transparent);
   --shadow-halo-pressed: 0 0 0 2px var(--background), 0 0 0 4px var(--ring), 0 0 40px 10px var(--primary);
-  /* A focused field: a hairline of light on the edge and a soft glow around it. */
+  /* A focused field: a hairline of light on the edge and a soft glow around it. Errors get the
+     hairline in red and no glow, so a mistake is marked without shouting. */
   --shadow-field: 0 0 0 1px var(--ring), 0 0 24px -4px var(--primary);
-  --shadow-field-invalid: 0 0 0 1px var(--destructive),
-    0 0 24px -6px var(--destructive);
+  --shadow-field-invalid: 0 0 0 1px var(--destructive);
   /* The landing horizon: light above the arc's edge and a little just inside it. */
   --shadow-horizon: 0 -22px 60px -6px var(--primary), inset 0 26px 70px -20px var(--primary);
 
