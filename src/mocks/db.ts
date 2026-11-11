@@ -1,4 +1,5 @@
 import type { Link, LinkStats, User } from '@/api/types'
+import { DEMO_CREDENTIALS } from './demo'
 
 type StoredUser = { user: User; password: string }
 type StoredLink = { userId: string; link: Link }
@@ -36,8 +37,8 @@ function seedStats(seed: number): LinkStats {
 }
 
 const DEMO_USER: StoredUser = {
-  user: { id: 'user-demo', email: 'demo@snipsh.com', createdAt: daysAgo(120) },
-  password: 'password123',
+  user: { id: 'user-demo', email: DEMO_CREDENTIALS.email, createdAt: daysAgo(120) },
+  password: DEMO_CREDENTIALS.password,
 }
 
 // Newest first. More than one page, so pagination is visible in the demo.

@@ -1,11 +1,14 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
+@import "@fontsource-variable/public-sans";
+@import "@fontsource/courier-prime/400.css";
+@import "@fontsource/courier-prime/700.css";
 
 @theme inline {
   --font-heading: var(--font-sans);
-  --font-sans: 'Geist Variable', sans-serif;
+  --font-sans: 'Public Sans Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Courier Prime', ui-monospace, 'Courier New', monospace;
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -24,52 +27,75 @@
   --color-card: var(--card);
   --color-foreground: var(--foreground);
   --color-background: var(--background);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
+  --radius-sm: var(--radius);
+  --radius-md: var(--radius);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-xl: var(--radius);
+  --radius-2xl: var(--radius);
+  --shadow-sheet: 0 1px 0 oklch(0.2 0.03 262 / 0.04), 0 6px 16px -8px oklch(0.2 0.03 262 / 0.16);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-strike: strike 450ms var(--ease-out-expo) both;
+  --animate-loop: draw 260ms var(--ease-out-expo) 380ms both;
+  --animate-settle: settle 2.4s ease-out both;
+
+  @keyframes strike {
+    from {
+      background-size: 0% 0.1em;
+    }
+  }
+  @keyframes draw {
+    from {
+      stroke-dashoffset: 1;
+    }
+  }
+  @keyframes settle {
+    from {
+      background-color: var(--accent);
+    }
+  }
 }
 
-/* Warm paper neutrals with one accent: vermilion. */
+/*
+ * A paste-up board. The ground is non-photo blue, sheets are white, guidelines are 1px.
+ * Pencil blue (primary) marks what the user can act on; red marks errors and deletion.
+ */
 :root {
   color-scheme: light dark;
-  --background: oklch(0.985 0.006 85);
-  --foreground: oklch(0.2 0.015 60);
-  --card: oklch(1 0 0);
+  --background: oklch(0.95 0.02 232);
+  --foreground: oklch(0.2 0.03 262);
+  --card: oklch(0.995 0.003 232);
   --card-foreground: var(--foreground);
-  --popover: oklch(1 0 0);
+  --popover: var(--card);
   --popover-foreground: var(--foreground);
-  --primary: oklch(0.55 0.2 33);
-  --primary-foreground: oklch(0.99 0 0);
-  --secondary: oklch(0.955 0.008 85);
+  --primary: oklch(0.47 0.19 263);
+  --primary-foreground: oklch(0.99 0.005 232);
+  --secondary: oklch(0.96 0.016 232);
   --secondary-foreground: var(--foreground);
-  --muted: oklch(0.955 0.008 85);
-  --muted-foreground: oklch(0.46 0.015 60);
-  --accent: oklch(0.955 0.008 85);
+  --muted: oklch(0.96 0.016 232);
+  --muted-foreground: oklch(0.43 0.04 255);
+  --accent: oklch(0.925 0.04 240);
   --accent-foreground: var(--foreground);
-  --destructive: oklch(0.52 0.21 27);
-  --border: oklch(0.89 0.01 85);
-  --input: oklch(0.82 0.012 85);
+  --destructive: oklch(0.5 0.2 27);
+  --border: oklch(0.85 0.045 230);
+  --input: oklch(0.58 0.06 248);
   --ring: var(--primary);
-  --radius: 0.5rem;
+  --radius: 2px;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: oklch(0.17 0.008 60);
-    --foreground: oklch(0.96 0.006 85);
-    --card: oklch(0.21 0.008 60);
-    --popover: oklch(0.21 0.008 60);
-    --primary: oklch(0.72 0.17 38);
-    --primary-foreground: oklch(0.17 0.01 60);
-    --secondary: oklch(0.26 0.008 60);
-    --muted: oklch(0.26 0.008 60);
-    --muted-foreground: oklch(0.75 0.01 85);
-    --accent: oklch(0.26 0.008 60);
-    --destructive: oklch(0.72 0.18 22);
-    --border: oklch(0.32 0.008 60);
-    --input: oklch(0.4 0.008 60);
+    --background: oklch(0.2 0.045 258);
+    --foreground: oklch(0.95 0.01 232);
+    --card: oklch(0.245 0.045 258);
+    --primary: oklch(0.8 0.1 250);
+    --primary-foreground: oklch(0.2 0.045 258);
+    --secondary: oklch(0.29 0.045 258);
+    --muted: oklch(0.29 0.045 258);
+    --muted-foreground: oklch(0.8 0.03 240);
+    --accent: oklch(0.33 0.06 255);
+    --destructive: oklch(0.78 0.14 22);
+    --border: oklch(0.38 0.055 250);
+    --input: oklch(0.6 0.05 248);
   }
 }
 
@@ -79,12 +105,47 @@
   }
   html {
     @apply font-sans;
+    scrollbar-color: var(--input) transparent;
   }
   body {
     @apply bg-background text-foreground antialiased;
+    caret-color: var(--primary);
+  }
+  ::selection {
+    background-color: var(--border);
+    color: var(--foreground);
+  }
+  a {
+    text-underline-offset: 0.2em;
   }
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
+}
+
+@utility sheet {
+  @apply border bg-card text-card-foreground shadow-sheet;
+}
+
+/* Link strings are case-sensitive codes, so they get the typescript face. */
+@utility typescript {
+  @apply font-mono;
+  font-variant-ligatures: none;
+  overflow-wrap: anywhere;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@utility pencil-strike {
+  background: linear-gradient(var(--primary), var(--primary)) no-repeat 0 56% / 100% 0.1em;
+  animation: var(--animate-strike);
 }
