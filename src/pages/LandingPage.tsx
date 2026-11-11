@@ -54,7 +54,7 @@ export function LandingPage() {
         </p>
 
         <form onSubmit={showPreview} noValidate className="mt-10 w-full max-w-2xl">
-          <div className="flex items-center gap-2 rounded-full border border-input bg-card p-1.5 pl-5 transition-shadow focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50">
+          <div className="flex items-center gap-2 rounded-full border border-input bg-card p-1.5 pl-5 transition-[border-color,box-shadow] duration-200 hover:border-foreground/55 focus-within:border-ring focus-within:shadow-field">
             <label htmlFor="preview-url" className="sr-only">
               Long URL to preview
             </label>
