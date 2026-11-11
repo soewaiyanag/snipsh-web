@@ -41,16 +41,7 @@ export function LandingPage() {
     : { to: '/register', label: 'Get started' }
 
   return (
-    <div className="relative">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-16 left-1/2 -z-10 h-192 w-screen -translate-x-1/2 overflow-hidden"
-      >
-        {/* The light sits behind the plot, so the lines stand against it as a dark horizon. */}
-        <div className="absolute inset-0 bg-[radial-gradient(56%_58%_at_50%_64%,var(--glow),transparent_74%)]" />
-        <Ridgeline className="absolute inset-x-0 bottom-0 h-60 w-full sm:h-104" />
-      </div>
-
+    <div>
       <section className="mx-auto flex max-w-3xl flex-col items-center pt-14 text-center sm:pt-24">
         <h1 className="text-[2.6rem] leading-[1.05] font-bold tracking-tight text-balance sm:text-7xl">
           Long links, cut short.
@@ -102,14 +93,26 @@ export function LandingPage() {
           </div>
         </form>
 
-        {env.useMocks && !isAuthenticated && (
-          <Button asChild variant="outline" className="bg-card">
+        {/* On clear ground, above the plot, so it is never lost against the lines. */}
+        <Button asChild size="lg" className="bg-foreground text-background hover:bg-foreground/85">
+          {env.useMocks && !isAuthenticated ? (
             <Link to="/login">Explore the demo account</Link>
-          </Button>
-        )}
+          ) : (
+            <Link to={start.to}>{start.label}</Link>
+          )}
+        </Button>
       </section>
 
-      <section aria-labelledby="what-it-does" className="mt-52 sm:mt-80">
+      {/* Its own band below the controls: the light sits behind the lines, which form a horizon. */}
+      <div
+        aria-hidden
+        className="pointer-events-none relative left-1/2 -z-10 mt-8 h-52 w-screen -translate-x-1/2 sm:mt-10 sm:h-80"
+      >
+        <div className="absolute inset-x-0 -top-44 bottom-0 bg-[radial-gradient(48%_72%_at_50%_72%,var(--glow),transparent_72%)]" />
+        <Ridgeline className="absolute inset-0 size-full" />
+      </div>
+
+      <section aria-labelledby="what-it-does" className="mt-14 sm:mt-20">
         <h2 id="what-it-does" className="text-2xl font-semibold tracking-tight sm:text-3xl">
           What it does
         </h2>
