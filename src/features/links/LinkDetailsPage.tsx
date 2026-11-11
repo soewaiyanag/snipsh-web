@@ -1,3 +1,4 @@
+import { ArrowLeftIcon, PencilIcon } from 'lucide-react'
 import { useState } from 'react'
 import { Link as RouterLink, useNavigate, useParams } from 'react-router'
 import { toast } from 'sonner'
@@ -23,7 +24,7 @@ export function LinkDetailsPage() {
 
   if (link.isPending) {
     return (
-      <div aria-label="Loading link" className="grid gap-4 pt-6 sm:pt-10">
+      <div aria-label="Loading link" className="mx-auto grid max-w-3xl gap-4 pt-6 sm:pt-10">
         <Skeleton className="h-4 w-24" />
         <Skeleton className="h-9 w-72 max-w-full" />
         <Skeleton className="h-20 w-full" />
@@ -34,7 +35,7 @@ export function LinkDetailsPage() {
   if (link.isError) {
     const isMissing = isApiError(link.error, HTTP_STATUS.notFound)
     return (
-      <div role="alert" className="pt-6 sm:pt-10">
+      <div role="alert" className="mx-auto max-w-3xl pt-6 sm:pt-10">
         <h1 className="text-3xl font-semibold tracking-tight">
           {isMissing ? 'This link does not exist' : 'This link could not be loaded'}
         </h1>
@@ -60,30 +61,24 @@ export function LinkDetailsPage() {
   const { data } = link
 
   return (
-    <div className="pt-6 sm:pt-10">
-      <RouterLink to="/links" className="rounded-sm text-sm text-muted-foreground underline hover:text-foreground">
-        All links
-      </RouterLink>
+    <div className="mx-auto max-w-3xl pt-6 sm:pt-10">
+      <Button asChild variant="ghost" className="-ml-4 text-muted-foreground">
+        <RouterLink to="/links">
+          <ArrowLeftIcon />
+          All links
+        </RouterLink>
+      </Button>
 
-      <header className="mt-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
-        <div className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2">
-          <h1 className="link-text text-2xl font-bold sm:text-3xl">
-            <span className="font-normal text-muted-foreground">{SHORT_LINK_PREFIX}</span>
-            {data.slug}
-          </h1>
-          <LinkStatus link={data} />
-        </div>
-        <div className="flex items-center gap-1">
-          <CopyButton slug={data.slug} />
-          <Button variant="ghost" onClick={() => setIsEditing(true)} disabled={isEditing}>
-            Edit
-          </Button>
-          <DeleteLinkButton link={data} onDeleted={() => navigate('/links')} />
-        </div>
-      </header>
+      <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2">
+        <h1 className="link-text text-3xl font-bold sm:text-4xl">
+          <span className="font-normal text-muted-foreground">{SHORT_LINK_PREFIX}</span>
+          {data.slug}
+        </h1>
+        <LinkStatus link={data} />
+      </div>
 
       {isEditing ? (
-        <section aria-label="Edit link" className="sheet mt-6 p-5">
+        <section aria-label="Edit link" className="mt-6 rounded-xl bg-card p-5">
           <LinkForm
             schema={updateLinkSchema}
             defaultValues={{ url: data.url, slug: data.slug }}
@@ -99,25 +94,28 @@ export function LinkDetailsPage() {
           />
         </section>
       ) : (
-        <dl className="mt-6 grid gap-x-10 gap-y-4 border-y py-5 sm:grid-cols-[minmax(0,1fr)_auto]">
-          <div className="min-w-0">
-            <dt className="text-sm text-muted-foreground">Goes to</dt>
-            <dd className="mt-1">
-              <a
-                href={data.url}
-                target="_blank"
-                rel="noreferrer"
-                className="link-text rounded-sm underline hover:no-underline"
-              >
-                {data.url}
-              </a>
-            </dd>
+        <>
+          <p className="mt-3 text-muted-foreground">
+            Goes to{' '}
+            <a
+              href={data.url}
+              target="_blank"
+              rel="noreferrer"
+              className="link-text rounded-sm text-foreground underline hover:no-underline"
+            >
+              {data.url}
+            </a>
+          </p>
+          <p className="mt-1 text-sm text-muted-foreground">Made {formatDate(data.createdAt)}</p>
+          <div className="mt-6 flex flex-wrap items-center gap-2">
+            <CopyButton slug={data.slug} variant="default" />
+            <Button variant="outline" onClick={() => setIsEditing(true)}>
+              <PencilIcon />
+              Edit
+            </Button>
+            <DeleteLinkButton link={data} onDeleted={() => navigate('/links')} />
           </div>
-          <div>
-            <dt className="text-sm text-muted-foreground">Created</dt>
-            <dd className="mt-1 tabular-nums">{formatDate(data.createdAt)}</dd>
-          </div>
-        </dl>
+        </>
       )}
 
       <LinkStats id={data.id} slug={data.slug} />

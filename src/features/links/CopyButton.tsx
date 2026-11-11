@@ -6,7 +6,9 @@ import { shortLinkLabel, shortLinkUrl } from '@/lib/short-link'
 
 const COPIED_FEEDBACK_MS = 1600
 
-export function CopyButton({ slug }: { slug: string }) {
+type CopyButtonProps = { slug: string; variant?: 'secondary' | 'default' }
+
+export function CopyButton({ slug, variant = 'secondary' }: CopyButtonProps) {
   const [isCopied, setIsCopied] = useState(false)
 
   async function copy() {
@@ -22,7 +24,7 @@ export function CopyButton({ slug }: { slug: string }) {
 
   return (
     // A fixed minimum width keeps the row still while the label changes.
-    <Button variant="secondary" onClick={copy} aria-label={`Copy ${shortLinkLabel(slug)}`} className="min-w-24">
+    <Button variant={variant} onClick={copy} aria-label={`Copy ${shortLinkLabel(slug)}`} className="min-w-24">
       {isCopied ? <CheckIcon /> : <CopyIcon />}
       {isCopied ? 'Copied' : 'Copy'}
     </Button>

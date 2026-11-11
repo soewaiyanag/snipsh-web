@@ -20,7 +20,10 @@ async function fillAndSubmit(
 ) {
   const form = createForm()
   await user.type(form.getByLabelText('Long URL'), url)
-  if (slug) await user.type(form.getByLabelText('Slug (optional)'), slug)
+  if (slug) {
+    await user.click(form.getByRole('button', { name: 'Choose your own slug' }))
+    await user.type(form.getByLabelText('Slug (optional)'), slug)
+  }
   await user.click(form.getByRole('button', { name: 'Shorten' }))
 }
 

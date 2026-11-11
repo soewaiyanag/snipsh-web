@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { HTTP_STATUS, isApiError } from '@/api/client'
-import type { createLinkFormSchema, updateLinkSchema } from '@/api/schemas'
+import type { updateLinkSchema } from '@/api/schemas'
 import { Field } from '@/components/Field'
 import { Button } from '@/components/ui/button'
 import { SHORT_LINK_PREFIX } from '@/lib/short-link'
@@ -11,24 +11,22 @@ export const SLUG_TAKEN_MESSAGE = 'That slug is taken'
 type LinkFormValues = { url: string; slug: string }
 
 type LinkFormProps = {
-  schema: typeof createLinkFormSchema | typeof updateLinkSchema
+  schema: typeof updateLinkSchema
   defaultValues: LinkFormValues
   submitLabel: string
   submittingLabel: string
   slugLabel: string
-  slugPlaceholder?: string
   onSubmit: (values: LinkFormValues) => Promise<void>
   onCancel?: () => void
 }
 
-// One form for making and editing a link: the same two fields and the same error rules.
+// The inline form for editing a link, in a list row or on the details page.
 export function LinkForm({
   schema,
   defaultValues,
   submitLabel,
   submittingLabel,
   slugLabel,
-  slugPlaceholder,
   onSubmit,
   onCancel,
 }: LinkFormProps) {
@@ -84,7 +82,6 @@ export function LinkForm({
           autoCapitalize="none"
           spellCheck={false}
           prefix={SHORT_LINK_PREFIX}
-          placeholder={slugPlaceholder}
           inputClassName="link-text"
           error={errors.slug?.message}
           {...register('slug')}

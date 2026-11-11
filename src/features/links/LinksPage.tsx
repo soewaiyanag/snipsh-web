@@ -1,15 +1,15 @@
 import { useState } from 'react'
 import { Navigate, useSearchParams } from 'react-router'
-import { toast } from 'sonner'
-import { createLinkFormSchema } from '@/api/schemas'
+import type { Link } from '@/api/types'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { formatNumber } from '@/lib/format'
-import { shortLinkLabel } from '@/lib/short-link'
+import { SHORT_LINK_PREFIX } from '@/lib/short-link'
 import { cn } from '@/lib/utils'
-import { LinkForm } from './LinkForm'
+import { CopyButton } from './CopyButton'
+import { CreateLinkBar } from './CreateLinkBar'
 import { LinkRow } from './LinkRow'
-import { LINKS_PAGE_SIZE, useCreateLink, useLinks } from './queries'
+import { LINKS_PAGE_SIZE, useLinks } from './queries'
 
 const FIRST_PAGE = 1
 const SKELETON_ROWS = 6
@@ -18,8 +18,7 @@ export function LinksPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const page = Math.max(FIRST_PAGE, Number(searchParams.get('page')) || FIRST_PAGE)
   const links = useLinks(page)
-  const createLink = useCreateLink()
-  const [newLinkId, setNewLinkId] = useState<string | null>(null)
+  const [madeLink, setMadeLink] = useState<Link | null>(null)
 
   function goToPage(next: number) {
     setSearchParams(next === FIRST_PAGE ? {} : { page: String(next) })
@@ -34,36 +33,44 @@ export function LinksPage() {
   }
 
   return (
-    <div className="pt-6 sm:pt-10">
-      <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-        <h1 className="text-3xl font-semibold tracking-tight">Your links</h1>
-        {total > 0 && (
-          <p className="text-sm text-muted-foreground tabular-nums">
-            {formatNumber(total)} {total === 1 ? 'link' : 'links'}, newest first
-          </p>
-        )}
-      </div>
+    <div className="mx-auto max-w-3xl pt-8 sm:pt-14">
+      <h1 className="text-center text-3xl font-bold tracking-tight sm:text-4xl">Shorten a link</h1>
 
-      <section aria-label="Make a short link" className="sheet mt-6 p-5">
-        <LinkForm
-          schema={createLinkFormSchema}
-          defaultValues={{ url: '', slug: '' }}
-          submitLabel="Shorten"
-          submittingLabel="Shortening…"
-          slugLabel="Slug (optional)"
-          slugPlaceholder="made for you if empty"
-          onSubmit={async ({ url, slug }) => {
-            const link = await createLink.mutateAsync({ url, slug: slug || undefined })
-            setNewLinkId(link.id)
+      <section aria-label="Make a short link" className="mt-7">
+        <CreateLinkBar
+          onCreated={(link) => {
+            setMadeLink(link)
             goToPage(FIRST_PAGE)
-            toast.success('Short link made', { description: shortLinkLabel(link.slug) })
           }}
         />
+        {madeLink && (
+          <p
+            key={madeLink.id}
+            role="status"
+            className="mx-auto mt-6 flex w-fit max-w-full animate-in flex-wrap items-center justify-center gap-x-4 gap-y-2 rounded-xl border border-ring bg-card py-2 pr-2 pl-5 shadow-field duration-200 zoom-in-95 fade-in-0"
+          >
+            <span className="link-text text-lg font-bold">
+              <span className="font-normal text-muted-foreground">{SHORT_LINK_PREFIX}</span>
+              {madeLink.slug}
+            </span>
+            <CopyButton slug={madeLink.slug} variant="default" />
+          </p>
+        )}
       </section>
 
-      <section aria-label="Links" aria-busy={links.isFetching} className="mt-10">
+      <section aria-labelledby="links-heading" aria-busy={links.isFetching} className="mt-14">
+        <div className="mb-2 flex items-baseline justify-between gap-4 px-4">
+          <h2 id="links-heading" className="text-xl font-semibold tracking-tight">
+            Your links
+          </h2>
+          {total > 0 && (
+            <p className="text-sm text-muted-foreground tabular-nums">
+              {formatNumber(total)}, newest first
+            </p>
+          )}
+        </div>
         {links.isPending ? (
-          <ul aria-label="Loading links" className="divide-y border-y">
+          <ul aria-label="Loading links" className="px-4">
             {Array.from({ length: SKELETON_ROWS }, (_, row) => (
               <li key={row} className="flex items-center gap-6 py-5">
                 <Skeleton className="h-6 w-48" />
@@ -73,7 +80,7 @@ export function LinksPage() {
             ))}
           </ul>
         ) : links.isError ? (
-          <div role="alert" className="border-y py-10">
+          <div role="alert" className="px-4 py-8">
             <p className="font-semibold">Your links could not be loaded.</p>
             <p className="mt-1 text-muted-foreground">{links.error.message}</p>
             <Button variant="outline" className="mt-5" onClick={() => links.refetch()}>
@@ -81,15 +88,15 @@ export function LinksPage() {
             </Button>
           </div>
         ) : total === 0 ? (
-          <div className="border-y py-12">
+          <div className="px-4 py-8">
             <p className="text-xl font-semibold">No links yet.</p>
             <p className="mt-2 max-w-prose text-muted-foreground">
-              Paste a long URL into the form above and press Shorten. Your short link will appear
+              Paste a long URL into the bar above and press Shorten. Your short link will appear
               here, ready to copy.
             </p>
             <Button
               className="mt-6"
-              onClick={() => document.querySelector<HTMLInputElement>('input[name="url"]')?.focus()}
+              onClick={() => document.getElementById('create-url')?.focus()}
             >
               Make your first link
             </Button>
@@ -98,14 +105,14 @@ export function LinksPage() {
           <>
             <ul
               aria-label="Your links"
-              className={cn('-mx-4 divide-y border-y', links.isPlaceholderData && 'opacity-60')}
+              className={cn('grid gap-1', links.isPlaceholderData && 'opacity-60')}
             >
               {links.data.items.map((link) => (
-                <LinkRow key={link.id} link={link} isNew={link.id === newLinkId} />
+                <LinkRow key={link.id} link={link} isNew={link.id === madeLink?.id} />
               ))}
             </ul>
             {lastPage > FIRST_PAGE && (
-              <nav aria-label="Pages" className="flex items-center justify-between gap-4 pt-5">
+              <nav aria-label="Pages" className="flex items-center justify-between gap-4 px-4 pt-6">
                 <Button variant="outline" disabled={page === FIRST_PAGE} onClick={() => goToPage(page - 1)}>
                   Previous
                 </Button>

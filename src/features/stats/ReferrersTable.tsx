@@ -1,7 +1,7 @@
 import type { LinkStats } from '@/api/types'
 import { formatNumber } from '@/lib/format'
 
-const DIRECT_LABEL = 'Direct (typed, pasted or from an app)'
+const DIRECT_LABEL = 'Direct: typed, pasted or opened from an app'
 
 export function ReferrersTable({ referrers }: { referrers: LinkStats['topReferrers'] }) {
   const highest = Math.max(...referrers.map(({ count }) => count))
@@ -22,7 +22,7 @@ export function ReferrersTable({ referrers }: { referrers: LinkStats['topReferre
               {/* Length carries the comparison, so no colour is needed. */}
               <span
                 aria-hidden
-                className="mt-2 block h-px bg-foreground"
+                className="mt-2 block h-0.5 rounded-full bg-ring shadow-[0_0_8px_var(--primary)]"
                 style={{ width: `${(count / highest) * 100}%` }}
               />
             </td>
