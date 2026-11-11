@@ -48,7 +48,7 @@ Nothing is claimed yet. The owner confirmed this is an open decision: the produc
 - The owner's later instruction, which is binding: the design must be simple, and must look different from most URL shorteners. A generic URL-shortener design is the thing to avoid.
 - The owner prefers a dark theme, and does not want yellow anywhere in the design.
 - The owner chose the direction: futuristic, dark, with thin white line plots as the visual on the landing page, and the hero of spaceship.com as a reference. They do not want a slug set at giant size.
-- The owner chose the final look from sketches: a logo that is a ring with a piece snipped out; a landing hero with one still, glowing arc like a horizon, whose light follows the cursor and never rotates; and flat pill buttons, white for the main action, that gain a ring of blue light on hover. Bevelled or shaded buttons read as dated to the owner.
+- The owner chose the final look from sketches: a logo that is a ring with a piece snipped out; a landing hero with one still, glowing arc like a horizon, with nothing moving and no other light, used on the landing hero only; and flat pill buttons, white for the main action, that gain a ring of blue light on hover. Bevelled or shaded buttons read as dated to the owner.
 
 ## Evidence on Hand
 

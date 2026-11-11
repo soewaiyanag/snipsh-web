@@ -31,7 +31,7 @@ export function Field({
       <Label htmlFor={fieldId}>{label}</Label>
       <div className="flex">
         {prefix && (
-          <span className="link-text flex items-center whitespace-nowrap rounded-l-lg border border-r-0 border-input bg-muted px-2.5 text-sm text-muted-foreground">
+          <span className="link-text flex items-center whitespace-nowrap rounded-l-lg border border-r-0 border-input bg-muted px-3.5 text-sm text-muted-foreground">
             {prefix}
           </span>
         )}
