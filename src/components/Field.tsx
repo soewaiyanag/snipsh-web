@@ -21,7 +21,7 @@ export function Field({ label, error, hint, prefix, className, id, ...inputProps
       <Label htmlFor={fieldId}>{label}</Label>
       <div className="flex">
         {prefix && (
-          <span className="typescript flex items-center rounded-l-lg border border-r-0 border-input bg-muted px-2.5 text-sm text-muted-foreground">
+          <span className="link-text flex items-center rounded-l-lg border border-r-0 border-input bg-muted px-2.5 text-sm text-muted-foreground">
             {prefix}
           </span>
         )}

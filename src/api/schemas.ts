@@ -32,7 +32,7 @@ function isSlug(value: string) {
   )
 }
 
-const url = z
+export const urlSchema = z
   .string()
   .trim()
   .max(URL_MAX_LENGTH, `Keep the URL under ${URL_MAX_LENGTH} characters`)
@@ -53,7 +53,7 @@ export const loginSchema = z.object({
 })
 
 export const createLinkSchema = z.object({
-  url,
+  url: urlSchema,
   // Empty means "let the server generate one".
   slug: z
     .string()
@@ -63,7 +63,7 @@ export const createLinkSchema = z.object({
 })
 
 export const updateLinkSchema = z.object({
-  url,
+  url: urlSchema,
   slug: z.string().trim().refine(isSlug, SLUG_MESSAGE),
 })
 

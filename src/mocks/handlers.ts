@@ -4,12 +4,11 @@ import { HTTP_STATUS } from '@/api/client'
 import { createLinkSchema, loginSchema, registerSchema, updateLinkSchema } from '@/api/schemas'
 import type { ApiError, AuthToken, Link, Paginated } from '@/api/types'
 import { env } from '@/env'
+import { randomSlug } from '@/lib/short-link'
 import { db, EMPTY_STATS } from './db'
 
 const DEFAULT_PAGE = 1
 const DEFAULT_LIMIT = 20
-const GENERATED_SLUG_LENGTH = 5
-const SLUG_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 const STATUS = { ...HTTP_STATUS, created: 201, found: 302, badRequest: 400 } as const
 
 const api = (path: string) => `${env.apiUrl}${path}`
@@ -51,10 +50,7 @@ function isSlugTaken(slug: string, exceptId?: string) {
 function generateSlug() {
   let slug: string
   do {
-    slug = Array.from(
-      { length: GENERATED_SLUG_LENGTH },
-      () => SLUG_ALPHABET[Math.floor(Math.random() * SLUG_ALPHABET.length)],
-    ).join('')
+    slug = randomSlug()
   } while (isSlugTaken(slug))
   return slug
 }

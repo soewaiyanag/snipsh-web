@@ -1,14 +1,12 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/public-sans";
-@import "@fontsource/courier-prime/400.css";
-@import "@fontsource/courier-prime/700.css";
+@import "@fontsource-variable/sora";
+@import "@fontsource-variable/red-hat-mono";
 
 @theme inline {
-  --font-heading: var(--font-sans);
-  --font-sans: 'Public Sans Variable', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'Courier Prime', ui-monospace, 'Courier New', monospace;
+  --font-sans: 'Sora Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Red Hat Mono Variable', ui-monospace, monospace;
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -27,23 +25,17 @@
   --color-card: var(--card);
   --color-foreground: var(--foreground);
   --color-background: var(--background);
-  --radius-sm: var(--radius);
-  --radius-md: var(--radius);
-  --radius-lg: var(--radius);
-  --radius-xl: var(--radius);
-  --radius-2xl: var(--radius);
-  --shadow-sheet: 0 1px 0 oklch(0.2 0.03 262 / 0.04), 0 6px 16px -8px oklch(0.2 0.03 262 / 0.16);
+  /* Controls are pills; panels and dialogs are softly rounded. */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 9999px;
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.5rem;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --animate-strike: strike 450ms var(--ease-out-expo) both;
-  --animate-loop: draw 260ms var(--ease-out-expo) 380ms both;
+  --animate-trace: trace 1.6s var(--ease-out-expo) both;
   --animate-settle: settle 2.4s ease-out both;
 
-  @keyframes strike {
-    from {
-      background-size: 0% 0.1em;
-    }
-  }
-  @keyframes draw {
+  @keyframes trace {
     from {
       stroke-dashoffset: 1;
     }
@@ -56,46 +48,47 @@
 }
 
 /*
- * A paste-up board. The ground is non-photo blue, sheets are white, guidelines are 1px.
- * Pencil blue (primary) marks what the user can act on; red marks errors and deletion.
+ * Night signal: a blue-black ground, white type, thin white lines for clicks.
+ * Electric blue is the only colour. Dark is the designed look; light is its inverse.
  */
 :root {
   color-scheme: light dark;
-  --background: oklch(0.95 0.02 232);
-  --foreground: oklch(0.2 0.03 262);
-  --card: oklch(0.995 0.003 232);
+  --background: oklch(0.985 0.003 268);
+  --foreground: oklch(0.16 0.02 268);
+  --card: oklch(1 0 0);
   --card-foreground: var(--foreground);
   --popover: var(--card);
   --popover-foreground: var(--foreground);
-  --primary: oklch(0.47 0.19 263);
-  --primary-foreground: oklch(0.99 0.005 232);
-  --secondary: oklch(0.96 0.016 232);
+  --primary: oklch(0.5 0.25 268);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.955 0.006 268);
   --secondary-foreground: var(--foreground);
-  --muted: oklch(0.96 0.016 232);
-  --muted-foreground: oklch(0.43 0.04 255);
-  --accent: oklch(0.925 0.04 240);
+  --muted: oklch(0.955 0.006 268);
+  --muted-foreground: oklch(0.42 0.03 268);
+  --accent: oklch(0.93 0.025 268);
   --accent-foreground: var(--foreground);
-  --destructive: oklch(0.5 0.2 27);
-  --border: oklch(0.85 0.045 230);
-  --input: oklch(0.58 0.06 248);
+  --destructive: oklch(0.52 0.21 27);
+  --border: oklch(0.9 0.01 268);
+  --input: oklch(0.6 0.03 268);
   --ring: var(--primary);
-  --radius: 2px;
+  --glow: oklch(0.5 0.25 268 / 0.16);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: oklch(0.2 0.045 258);
-    --foreground: oklch(0.95 0.01 232);
-    --card: oklch(0.245 0.045 258);
-    --primary: oklch(0.8 0.1 250);
-    --primary-foreground: oklch(0.2 0.045 258);
-    --secondary: oklch(0.29 0.045 258);
-    --muted: oklch(0.29 0.045 258);
-    --muted-foreground: oklch(0.8 0.03 240);
-    --accent: oklch(0.33 0.06 255);
-    --destructive: oklch(0.78 0.14 22);
-    --border: oklch(0.38 0.055 250);
-    --input: oklch(0.6 0.05 248);
+    --background: oklch(0.13 0.02 268);
+    --foreground: oklch(0.97 0.004 268);
+    --card: oklch(0.18 0.025 268);
+    --primary: oklch(0.54 0.25 268);
+    --secondary: oklch(0.22 0.025 268);
+    --muted: oklch(0.22 0.025 268);
+    --muted-foreground: oklch(0.77 0.02 268);
+    --accent: oklch(0.27 0.06 268);
+    --destructive: oklch(0.76 0.16 22);
+    --border: oklch(0.29 0.03 268);
+    --input: oklch(0.55 0.04 268);
+    --ring: oklch(0.76 0.14 268);
+    --glow: oklch(0.47 0.29 266);
   }
 }
 
@@ -109,14 +102,15 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
-    caret-color: var(--primary);
+    caret-color: var(--ring);
+    overflow-x: clip;
   }
   ::selection {
-    background-color: var(--border);
-    color: var(--foreground);
+    background-color: var(--primary);
+    color: var(--primary-foreground);
   }
   a {
-    text-underline-offset: 0.2em;
+    text-underline-offset: 0.25em;
   }
   button:not(:disabled),
   [role="button"]:not(:disabled) {
@@ -125,11 +119,11 @@
 }
 
 @utility sheet {
-  @apply border bg-card text-card-foreground shadow-sheet;
+  @apply rounded-xl border bg-card text-card-foreground;
 }
 
-/* Link strings are case-sensitive codes, so they get the typescript face. */
-@utility typescript {
+/* Link strings are case-sensitive codes, so they alone get the mono face. */
+@utility link-text {
   @apply font-mono;
   font-variant-ligatures: none;
   overflow-wrap: anywhere;
@@ -143,9 +137,4 @@
     animation-delay: 0ms !important;
     transition-duration: 0.01ms !important;
   }
-}
-
-@utility pencil-strike {
-  background: linear-gradient(var(--primary), var(--primary)) no-repeat 0 56% / 100% 0.1em;
-  animation: var(--animate-strike);
 }

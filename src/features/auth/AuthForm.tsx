@@ -54,12 +54,12 @@ export function AuthForm({
 
   return (
     <div className="mx-auto w-full max-w-sm pt-6 sm:pt-16">
-      <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
+      <h1 className="text-3xl font-semibold tracking-tight">{title}</h1>
       <p className="mt-1.5 text-muted-foreground">{intro}</p>
 
       <form onSubmit={submit} noValidate className="sheet mt-6 grid gap-4 p-5">
         {errors.root && (
-          <p role="alert" className="border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+          <p role="alert" className="rounded-md border border-destructive/40 bg-destructive/10 px-3.5 py-2.5 text-sm text-destructive">
             {errors.root.message}
           </p>
         )}
@@ -87,7 +87,7 @@ export function AuthForm({
             Just looking around?{' '}
             <button
               type="button"
-              className="font-medium text-primary underline hover:no-underline"
+              className="font-medium text-foreground underline hover:no-underline"
               onClick={() => reset(demo)}
             >
               Fill in the demo account

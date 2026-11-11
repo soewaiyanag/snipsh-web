@@ -32,7 +32,7 @@ function Header() {
           <Button asChild variant="ghost">
             <Link to="/login">Log in</Link>
           </Button>
-          <Button asChild>
+          <Button asChild className="bg-foreground text-background hover:bg-foreground/85">
             <Link to="/register">Get started</Link>
           </Button>
         </nav>
