@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { Link } from 'react-router'
 import { urlSchema } from '@/api/schemas'
-import { Ridgeline } from '@/components/Ridgeline'
+import { HorizonArc } from '@/components/HorizonArc'
 import { Button } from '@/components/ui/button'
 import { env } from '@/env'
 import { useAuth } from '@/features/auth/auth-context'
@@ -42,20 +42,13 @@ export function LandingPage() {
 
   return (
     <div className="relative">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-16 left-1/2 -z-10 h-192 w-screen -translate-x-1/2 overflow-hidden"
-      >
-        {/* The light sits behind the plot, so the lines stand against it as a dark horizon. */}
-        <div className="absolute inset-0 bg-[radial-gradient(56%_58%_at_50%_64%,var(--glow),transparent_74%)]" />
-        <Ridgeline className="absolute inset-x-0 bottom-0 h-60 w-full sm:h-104" />
-      </div>
+      <HorizonArc />
 
       <section className="mx-auto flex max-w-3xl flex-col items-center pt-14 text-center sm:pt-24">
         <h1 className="text-[2.6rem] leading-[1.05] font-bold tracking-tight text-balance sm:text-7xl">
           Long links, cut short.
         </h1>
-        <p className="mt-5 max-w-xl text-lg text-pretty text-muted-foreground dark:text-foreground/90">
+        <p className="mt-5 max-w-xl text-lg text-pretty text-muted-foreground">
           SnipShort turns any long URL into a short link you can share, and counts every click it
           gets.
         </p>
@@ -106,7 +99,7 @@ export function LandingPage() {
         </form>
 
         {env.useMocks && !isAuthenticated && (
-          <Button asChild variant="contrast" size="lg">
+          <Button asChild variant="ghost" size="lg">
             <Link to="/login">Explore the demo account</Link>
           </Button>
         )}

@@ -32,7 +32,7 @@ function Header() {
           <Button asChild variant="ghost">
             <Link to="/login">Log in</Link>
           </Button>
-          <Button asChild variant="contrast">
+          <Button asChild>
             <Link to="/register">Get started</Link>
           </Button>
         </nav>
