@@ -8,9 +8,19 @@ type FieldProps = React.ComponentProps<typeof Input> & {
   error?: string
   hint?: string
   prefix?: string
+  inputClassName?: string
 }
 
-export function Field({ label, error, hint, prefix, className, id, ...inputProps }: FieldProps) {
+export function Field({
+  label,
+  error,
+  hint,
+  prefix,
+  className,
+  inputClassName,
+  id,
+  ...inputProps
+}: FieldProps) {
   const generatedId = useId()
   const fieldId = id ?? generatedId
   const messageId = `${fieldId}-message`
@@ -21,7 +31,7 @@ export function Field({ label, error, hint, prefix, className, id, ...inputProps
       <Label htmlFor={fieldId}>{label}</Label>
       <div className="flex">
         {prefix && (
-          <span className="link-text flex items-center rounded-l-lg border border-r-0 border-input bg-muted px-2.5 text-sm text-muted-foreground">
+          <span className="link-text flex items-center whitespace-nowrap rounded-l-lg border border-r-0 border-input bg-muted px-2.5 text-sm text-muted-foreground">
             {prefix}
           </span>
         )}
@@ -29,7 +39,7 @@ export function Field({ label, error, hint, prefix, className, id, ...inputProps
           id={fieldId}
           aria-invalid={error ? true : undefined}
           aria-describedby={message ? messageId : undefined}
-          className={cn(prefix && 'rounded-l-none')}
+          className={cn(prefix && 'rounded-l-none', inputClassName)}
           {...inputProps}
         />
       </div>

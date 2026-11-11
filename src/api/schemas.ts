@@ -52,15 +52,17 @@ export const loginSchema = z.object({
   password: z.string().min(1, 'Enter your password'),
 })
 
-export const createLinkSchema = z.object({
+// What the create form holds: the slug is always a string, and empty means "generate one".
+export const createLinkFormSchema = z.object({
   url: urlSchema,
-  // Empty means "let the server generate one".
   slug: z
     .string()
     .trim()
-    .refine((value) => value === '' || isSlug(value), SLUG_MESSAGE)
-    .optional(),
+    .refine((value) => value === '' || isSlug(value), SLUG_MESSAGE),
 })
+
+// What the API accepts: the slug may also be left out.
+export const createLinkSchema = createLinkFormSchema.partial({ slug: true })
 
 export const updateLinkSchema = z.object({
   url: urlSchema,

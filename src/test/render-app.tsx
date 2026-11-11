@@ -2,7 +2,10 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { createMemoryRouter, RouterProvider } from 'react-router'
+import { login } from '@/api/auth'
 import { AuthProvider } from '@/features/auth/AuthProvider'
+import { setToken } from '@/features/auth/token'
+import { DEMO_CREDENTIALS } from '@/mocks/demo'
 import { routes } from '@/router'
 
 export function renderApp(initialPath: string) {
@@ -18,4 +21,9 @@ export function renderApp(initialPath: string) {
   )
 
   return { router, user: userEvent.setup() }
+}
+
+export async function signInAsDemo() {
+  const { accessToken } = await login(DEMO_CREDENTIALS)
+  setToken(accessToken, DEMO_CREDENTIALS.email)
 }
