@@ -41,7 +41,6 @@ export function LinkForm({
     formState: { errors, isSubmitting },
   } = useForm<LinkFormValues>({
     resolver: zodResolver(schema),
-    mode: 'onTouched',
     defaultValues,
   })
 
