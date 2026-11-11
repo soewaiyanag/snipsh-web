@@ -1,7 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { Link } from 'react-router'
 import { urlSchema } from '@/api/schemas'
-import { Ridgeline } from '@/components/Ridgeline'
 import { Button } from '@/components/ui/button'
 import { env } from '@/env'
 import { useAuth } from '@/features/auth/auth-context'
@@ -41,17 +40,24 @@ export function LandingPage() {
     : { to: '/register', label: 'Get started' }
 
   return (
-    <div>
-      <section className="mx-auto flex max-w-3xl flex-col items-center pt-14 text-center sm:pt-24">
+    <div className="relative">
+      {/* One soft light behind the hero. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute top-16 left-1/2 -z-10 h-112 w-screen -translate-x-1/2 bg-[radial-gradient(42%_52%_at_50%_48%,var(--glow),transparent_72%)]"
+      />
+
+      <section className="mx-auto flex max-w-4xl flex-col items-center pt-14 text-center sm:pt-24">
         <h1 className="text-[2.6rem] leading-[1.05] font-bold tracking-tight text-balance sm:text-7xl">
           Long links, cut short.
         </h1>
-        <p className="mt-5 max-w-xl text-lg text-pretty text-muted-foreground dark:text-foreground/90">
+
+        <p className="mt-5 max-w-xl text-lg text-pretty text-muted-foreground">
           SnipShort turns any long URL into a short link you can share, and counts every click it
           gets.
         </p>
 
-        <form onSubmit={showPreview} noValidate className="mt-10 w-full max-w-2xl">
+        <form onSubmit={showPreview} noValidate className="mt-8 w-full max-w-2xl">
           <div className="flex items-center gap-2 rounded-full border border-input bg-card p-1.5 pl-5 transition-shadow focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50">
             <label htmlFor="preview-url" className="sr-only">
               Long URL to preview
@@ -74,7 +80,7 @@ export function LandingPage() {
             </Button>
           </div>
 
-          <div id="preview-result" aria-live="polite" className="mt-4 min-h-16">
+          <div id="preview-result" aria-live="polite" className="mt-4 min-h-10">
             {preview && 'error' in preview && (
               <p className="text-sm text-destructive">{preview.error}</p>
             )}
@@ -93,7 +99,6 @@ export function LandingPage() {
           </div>
         </form>
 
-        {/* On clear ground, above the plot, so it is never lost against the lines. */}
         <Button asChild size="lg" className="bg-foreground text-background hover:bg-foreground/85">
           {env.useMocks && !isAuthenticated ? (
             <Link to="/login">Explore the demo account</Link>
@@ -103,16 +108,7 @@ export function LandingPage() {
         </Button>
       </section>
 
-      {/* Its own band below the controls: the light sits behind the lines, which form a horizon. */}
-      <div
-        aria-hidden
-        className="pointer-events-none relative left-1/2 -z-10 mt-8 h-52 w-screen -translate-x-1/2 sm:mt-10 sm:h-80"
-      >
-        <div className="absolute inset-x-0 -top-44 bottom-0 bg-[radial-gradient(48%_72%_at_50%_72%,var(--glow),transparent_72%)]" />
-        <Ridgeline className="absolute inset-0 size-full" />
-      </div>
-
-      <section aria-labelledby="what-it-does" className="mt-14 sm:mt-20">
+      <section aria-labelledby="what-it-does" className="mt-24 sm:mt-32">
         <h2 id="what-it-does" className="text-2xl font-semibold tracking-tight sm:text-3xl">
           What it does
         </h2>

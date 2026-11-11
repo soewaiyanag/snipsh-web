@@ -32,14 +32,8 @@
   --radius-xl: 1.25rem;
   --radius-2xl: 1.5rem;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --animate-trace: trace 1.6s var(--ease-out-expo) both;
   --animate-settle: settle 2.4s ease-out both;
 
-  @keyframes trace {
-    from {
-      stroke-dashoffset: 1;
-    }
-  }
   @keyframes settle {
     from {
       background-color: var(--accent);
@@ -88,7 +82,7 @@
     --border: oklch(0.29 0.03 268);
     --input: oklch(0.55 0.04 268);
     --ring: oklch(0.76 0.14 268);
-    --glow: oklch(0.47 0.29 266);
+    --glow: oklch(0.47 0.29 266 / 0.42);
   }
 }
 
