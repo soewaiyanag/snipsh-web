@@ -5,7 +5,7 @@ import { createLink, deleteLink, getLink, listLinks, updateLink } from '@/api/li
 import { getLinkStats } from '@/api/stats'
 import { setToken } from '@/features/auth/token'
 
-const DEMO = { email: 'demo@snipsh.com', password: 'password123' }
+const DEMO = { email: 'test@gmail.com', password: 'hesoyam1234' }
 const PAGE_SIZE = 20
 const BAD_REQUEST = 400
 

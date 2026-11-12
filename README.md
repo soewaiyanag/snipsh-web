@@ -6,7 +6,7 @@
 **Backend API:** https://github.com/soewaiyanag/snipsh-api  
 **API deployed at:** https://snipsh-api.onrender.com (work in progress)
 
-Try it with the demo account: `demo@snipsh.com` / `password123`
+Try it with the demo account: `test@gmail.com` / `hesoyam1234`
 
 ![The SnipShort landing page: a dark page with the headline "Long links, cut short.", a paste bar, and a glowing blue arc like a horizon](docs/landing.png)
 

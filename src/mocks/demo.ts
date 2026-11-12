@@ -1,1 +1,1 @@
-export const DEMO_CREDENTIALS = { email: 'demo@snipsh.com', password: 'password123' }
+export const DEMO_CREDENTIALS = { email: 'test@gmail.com', password: 'hesoyam1234' }

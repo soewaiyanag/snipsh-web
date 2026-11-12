@@ -27,7 +27,7 @@ Nothing is claimed yet. The owner confirmed this is an open decision: the produc
 - Come back to a list of your own links; open one to see total clicks, clicks per day and top referrers.
 - The short link's redirect is served by the API, never by this frontend.
 - The backend (`snip-api`, NestJS) is being built separately by the owner; the frontend runs against MSW mocks until it exists.
-- A seeded demo account (`demo@snipsh.com`) exists in the mock API, so the app can be explored without registering.
+- A seeded demo account (`test@gmail.com`) exists in the mock API, so the app can be explored without registering.
 
 ## Capabilities and Constraints
 
