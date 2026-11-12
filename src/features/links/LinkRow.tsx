@@ -2,6 +2,7 @@ import { PencilIcon } from 'lucide-react'
 import { useState } from 'react'
 import { Link as RouterLink } from 'react-router'
 import { toast } from 'sonner'
+import { capabilities } from '@/api/capabilities'
 import { updateLinkSchema } from '@/api/schemas'
 import type { Link } from '@/api/types'
 import { Button } from '@/components/ui/button'
@@ -74,15 +75,17 @@ export function LinkRow({ link, isNew }: { link: Link; isNew: boolean }) {
         </p>
         <div className="flex items-center gap-1">
           <CopyButton slug={link.slug} />
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setIsEditing(true)}
-            aria-label={`Edit ${label}`}
-            title="Edit"
-          >
-            <PencilIcon />
-          </Button>
+          {capabilities.editLinks && (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsEditing(true)}
+              aria-label={`Edit ${label}`}
+              title="Edit"
+            >
+              <PencilIcon />
+            </Button>
+          )}
           <DeleteLinkButton link={link} iconOnly />
         </div>
       </div>

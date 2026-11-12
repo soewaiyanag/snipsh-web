@@ -1,20 +1,31 @@
 # Backend requests
 
-Things the frontend needs from `snip-api` that the contract in `CLAUDE.md` does not cover. Nothing here is worked around in a way that hides the gap.
+Things the frontend needs from `snipsh-api` (https://github.com/soewaiyanag/snipsh-api). The frontend adapts to the API as it is; nothing here is worked around in a way that hides the gap.
 
-## 1. A way to learn the signed-in user's email
+## 1. Allow the deployed frontend through CORS
 
-**Need:** the header shows the user's email. `POST /auth/login` returns only `{ accessToken }`, and no endpoint returns the current user.
+`CORS_ORIGIN` on the Render service must include the deployed frontend, or a browser blocks every call from it. Today only `http://localhost:5173` is allowed.
 
-**Today:** the frontend keeps the email the user typed at login in `localStorage`, next to the token (`src/features/auth/token.ts`). That is correct right after login, but it cannot be recovered if storage is cleared and it would be wrong if the API ever normalises emails.
+```
+CORS_ORIGIN=http://localhost:5173,https://snipsh-swya.vercel.app
+```
 
-**Ask (either one):**
+## 2. The signed-in user's email
 
-- `GET /auth/me` returning `User`, or
-- include `user: User` in the login response.
+`GET /auth/me` returns only the token's contents (`sub`, `iat`, `exp`), so the header cannot show who is logged in. Today the frontend keeps the email typed at login in `localStorage`.
 
-## 2. Reserved slugs
+**Ask:** return `{ id, email, createdAt }` from `/auth/me`, ideally with `plan`.
 
-**Need:** the redirect lives at `GET /:slug`, at the same level as `/links` and `/auth`. A link whose slug is `links` or `auth` would collide with those routes.
+## 3. Click statistics
 
-**Ask:** reject reserved slugs on `POST /links` and `PATCH /links/:id`, with `400` or `409`, and never generate one. The frontend shows whatever message the server sends under the slug field, so no frontend change is needed.
+There is no `GET /links/:id/stats`. The frontend has the page built (total, clicks per day, top referrers) and hides it on the real API, showing "Click statistics are coming" instead. The expected shape is `LinkStats` in `src/api/types.ts`.
+
+## 4. Plan limits, before the user hits them
+
+The API refuses custom slugs on the free plan and a sixth link, both with `403` and a clear message, which the frontend shows. If `/auth/me` returned the plan and its limits, the UI could explain them before the user submits.
+
+## Noted, no action needed
+
+- `PATCH /links/:id` was removed on purpose, so the frontend hides Edit on the real API.
+- `GET /links` returns every link in one array, so the frontend pages it itself.
+- Another user's link answers `403` ("belongs to another user"), which confirms the id exists. The frontend shows it as "does not exist"; a `404` would reveal less.

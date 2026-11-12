@@ -33,12 +33,18 @@ export function CreateLinkBar({ onCreated }: { onCreated: (link: Link) => void }
       onCreated(link)
       setFocus('url')
     } catch (error) {
+      const message = error instanceof Error ? error.message : 'Something went wrong. Please try again.'
       if (isApiError(error, HTTP_STATUS.conflict)) {
         setShowsSlug(true)
-        setError('slug', { message: SLUG_TAKEN_MESSAGE })
+        // The API words "reserved" differently from "taken"; both belong under the slug field.
+        setError('slug', { message: /reserved/i.test(message) ? message : SLUG_TAKEN_MESSAGE })
         return
       }
-      const message = error instanceof Error ? error.message : 'Something went wrong. Please try again.'
+      // Custom slugs are a paid feature: that refusal belongs under the slug field too.
+      if (isApiError(error, HTTP_STATUS.forbidden) && slug && /slug/i.test(message)) {
+        setError('slug', { message })
+        return
+      }
       setError('root', { message })
     }
   })

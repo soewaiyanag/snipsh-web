@@ -2,8 +2,11 @@ import { request } from './client'
 import type { CreateLinkInput, UpdateLinkInput } from './schemas'
 import type { Link, Paginated } from './types'
 
-export function listLinks({ page, limit }: { page: number; limit: number }) {
-  return request<Paginated<Link>>(`/links?page=${page}&limit=${limit}`)
+// The API returns every link, newest first. Pages are cut here so nothing else needs to know.
+export async function listLinks({ page, limit }: { page: number; limit: number }): Promise<Paginated<Link>> {
+  const links = await request<Link[]>('/links')
+  const start = (page - 1) * limit
+  return { items: links.slice(start, start + limit), total: links.length, page, limit }
 }
 
 export function createLink(input: CreateLinkInput) {

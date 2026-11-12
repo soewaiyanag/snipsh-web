@@ -30,11 +30,11 @@ describe('mock API contract', () => {
     })
   })
 
-  it('paginates the list', async () => {
-    const first = await listLinks({ page: 1, limit: PAGE_SIZE })
-    const second = await listLinks({ page: 2, limit: PAGE_SIZE })
-    expect(first.items).toHaveLength(PAGE_SIZE)
-    expect(second.items).toHaveLength(first.total - PAGE_SIZE)
+  it('lists every link of the user, newest first', async () => {
+    const { items, total } = await listLinks({ page: 1, limit: PAGE_SIZE })
+    expect(items).toHaveLength(PAGE_SIZE)
+    expect(total).toBeGreaterThan(PAGE_SIZE)
+    expect((await listLinks({ page: 2, limit: PAGE_SIZE })).items).toHaveLength(total - PAGE_SIZE)
   })
 
   it('requires a token', async () => {
@@ -62,11 +62,12 @@ describe('mock API contract', () => {
     await expect(getLink(created.id)).rejects.toMatchObject({ status: HTTP_STATUS.notFound })
   })
 
-  it("answers 404 for another user's link", async () => {
+  it("answers 403 for another user's link and 404 for one that does not exist", async () => {
     const stranger = { email: 'stranger@example.com', password: 'password123' }
     await register(stranger)
     await loginAs(stranger)
-    await expect(getLink('link-1')).rejects.toMatchObject({ status: HTTP_STATUS.notFound })
+    await expect(getLink('link-1')).rejects.toMatchObject({ status: HTTP_STATUS.forbidden })
+    await expect(getLink('nope')).rejects.toMatchObject({ status: HTTP_STATUS.notFound })
     expect((await listLinks({ page: 1, limit: PAGE_SIZE })).total).toBe(0)
   })
 })

@@ -2,13 +2,11 @@ import { delay, http, HttpResponse } from 'msw'
 import type { z } from 'zod'
 import { HTTP_STATUS } from '@/api/client'
 import { createLinkSchema, loginSchema, registerSchema, updateLinkSchema } from '@/api/schemas'
-import type { ApiError, AuthToken, Link, Paginated } from '@/api/types'
+import type { ApiError, AuthToken, Link } from '@/api/types'
 import { env } from '@/env'
 import { randomSlug } from '@/lib/short-link'
 import { db, EMPTY_STATS } from './db'
 
-const DEFAULT_PAGE = 1
-const DEFAULT_LIMIT = 20
 const STATUS = { ...HTTP_STATUS, created: 201, found: 302, badRequest: 400 } as const
 
 const api = (path: string) => `${env.apiUrl}${path}`
@@ -39,8 +37,12 @@ async function parseBody<T>(request: Request, schema: z.ZodType<T>) {
 function findOwnLink(request: Request, id: unknown) {
   const user = authenticate(request)
   if (!user) return { error: unauthorized() }
-  const stored = db.links.find(({ userId, link }) => userId === user.id && link.id === id)
-  return stored ? { stored } : { error: linkNotFound() }
+  const stored = db.links.find(({ link }) => link.id === id)
+  if (!stored) return { error: linkNotFound() }
+  if (stored.userId !== user.id) {
+    return { error: errorResponse(STATUS.forbidden, 'This link belongs to another user', 'Forbidden') }
+  }
+  return { stored }
 }
 
 function isSlugTaken(slug: string, exceptId?: string) {
@@ -84,17 +86,10 @@ export const handlers = [
     await delay()
     const user = authenticate(request)
     if (!user) return unauthorized()
-    const params = new URL(request.url).searchParams
-    const page = Math.max(DEFAULT_PAGE, Number(params.get('page')) || DEFAULT_PAGE)
-    const limit = Math.max(1, Number(params.get('limit')) || DEFAULT_LIMIT)
-    const own = db.links.filter(({ userId }) => userId === user.id).map(({ link }) => link)
-    const start = (page - 1) * limit
-    return HttpResponse.json({
-      items: own.slice(start, start + limit),
-      total: own.length,
-      page,
-      limit,
-    } satisfies Paginated<Link>)
+    // Like the real API: every link of the user, newest first, no paging.
+    return HttpResponse.json(
+      db.links.filter(({ userId }) => userId === user.id).map(({ link }) => link) satisfies Link[],
+    )
   }),
 
   http.post(api('/links'), async ({ request }) => {

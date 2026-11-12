@@ -2,6 +2,7 @@ import { ArrowLeftIcon, PencilIcon } from 'lucide-react'
 import { useState } from 'react'
 import { Link as RouterLink, useNavigate, useParams } from 'react-router'
 import { toast } from 'sonner'
+import { capabilities } from '@/api/capabilities'
 import { HTTP_STATUS, isApiError } from '@/api/client'
 import { updateLinkSchema } from '@/api/schemas'
 import { Button } from '@/components/ui/button'
@@ -33,7 +34,8 @@ export function LinkDetailsPage() {
   }
 
   if (link.isError) {
-    const isMissing = isApiError(link.error, HTTP_STATUS.notFound)
+    const isMissing =
+      isApiError(link.error, HTTP_STATUS.notFound) || isApiError(link.error, HTTP_STATUS.forbidden)
     return (
       <div role="alert" className="mx-auto max-w-3xl pt-6 sm:pt-10">
         <h1 className="text-3xl font-semibold tracking-tight">
@@ -109,16 +111,28 @@ export function LinkDetailsPage() {
           <p className="mt-1 text-sm text-muted-foreground">Made {formatDate(data.createdAt)}</p>
           <div className="mt-6 flex flex-wrap items-center gap-2">
             <CopyButton slug={data.slug} variant="default" />
-            <Button variant="outline" onClick={() => setIsEditing(true)}>
-              <PencilIcon />
-              Edit
-            </Button>
+            {capabilities.editLinks && (
+              <Button variant="outline" onClick={() => setIsEditing(true)}>
+                <PencilIcon />
+                Edit
+              </Button>
+            )}
             <DeleteLinkButton link={data} onDeleted={() => navigate('/links')} />
           </div>
         </>
       )}
 
-      <LinkStats id={data.id} slug={data.slug} />
+      {capabilities.stats ? (
+        <LinkStats id={data.id} slug={data.slug} />
+      ) : (
+        <section className="mt-12 rounded-xl bg-card p-6">
+          <h2 className="text-xl font-semibold tracking-tight">Click statistics are coming</h2>
+          <p className="mt-2 max-w-prose text-muted-foreground">
+            The API does not count clicks yet. When it does, the total, the clicks per day and where
+            they came from will appear here.
+          </p>
+        </section>
+      )}
     </div>
   )
 }
