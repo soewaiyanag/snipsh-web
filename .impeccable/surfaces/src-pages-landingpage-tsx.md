@@ -17,14 +17,14 @@ Constraints: required by the owner's brief are a description of what SnipShort d
 
 ## Direction contract
 
-THESIS: The page is one dark field with a pulse in it: a stack of thin white lines rising under a blue light, a headline, and a single bar to paste a URL into. It refuses the gradient hero with three feature cards, and it refuses a giant slug as the hero.
+THESIS: One dark page with one glowing arc, like a horizon, and a single bar to paste a URL into. It refuses a feature grid, a screenshot, and any decoration beyond the arc.
 
-OWN-WORLD: Night signal. A blue-black ground, white type, and thin white lines that plot clicks. One electric blue is the only colour: it fills the main button and glows behind the landing hero. Controls are pills; lists are hairline rows, never boxed cards. Sora carries every heading and label; link strings alone are set in Red Hat Mono because they are case-sensitive codes. A light theme exists for systems set to light and is the same design inverted.
+OWN-WORLD: Night signal. A blue-black ground, white type, one electric blue that appears as light, never as a fill. Controls are flat pills: the main action is white and gains a ring of blue light on hover; a press shrinks it slightly. Fields are dark with a hairline edge that glows blue on focus. Sora for everything, Red Hat Mono for link strings. Light theme is the same design inverted.
 
-STORY: The visitor reads what SnipShort does in one line, pastes a URL into the bar and sees the short link it would become, then presses Get started. Someone evaluating the work takes the quieter link into the demo account.
+STORY: The visitor reads what SnipShort does in one line, pastes a URL into the bar and sees the short link it would become, then presses Get started. Someone evaluating the work takes the demo button.
 
-FIRST VIEWPORT: 1440 by 900. A top row: wordmark left, Log in and a blue Get started right. Centred below: the headline "Long links, cut short." at about 72px, one sentence under it, then a pill-shaped bar about 670px wide holding the URL field and a white Shorten button. Under the bar, the preview of the short link appears in place. Behind and below, edge to edge, the stack of white lines rises toward the centre, with one soft electric-blue glow behind it. On a phone the headline drops to about 40px and the bar keeps its pill shape. The signature interaction: on load the lines draw in from the left, one after another; under reduced motion they are simply there.
+FIRST VIEWPORT: Header with the snipped-ring logo, Log in and a white Get started. Centred: the headline "Long links, cut short.", one sentence, the pill bar, and the demo button on clear ground. The arc starts well below the demo button and fills the rest of the screen; it is still and is the only light.
 
-FORM: the catalogue sleeve challenger (brand-identity-canon-saville-catalog-sleeve), chosen by the owner after four hands and steered by them: dark, futuristic, no yellow, no giant slug, with the spaceship.com hero as a reference. seed:e00b512afba57f79
+FORM: chosen by the owner from sketches (direction 1, background B). seed:1ef01d8be6c3c37e
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance

@@ -47,7 +47,7 @@ Nothing is claimed yet. The owner confirmed this is an open decision: the produc
 - The owner's stated visual constraint (from `CLAUDE.md`): clean and distinctive, not a generic template; one accent colour, used consistently.
 - The owner's later instruction, which is binding: the design must be simple, and must look different from most URL shorteners. A generic URL-shortener design is the thing to avoid.
 - The owner prefers a dark theme, and does not want yellow anywhere in the design.
-- The owner chose the direction: futuristic, dark, with thin white line plots as the visual on the landing page, and the hero of spaceship.com as a reference. They do not want a slug set at giant size.
+- The owner chose the direction: futuristic and dark. The landing hero is one still, glowing arc like a horizon (no other light, nothing moving), used on the landing hero only; the logo is a ring with a piece snipped out; buttons are flat pills, white for the main action, with a ring of light on hover. Signed-in pages use the same theme without the arc: a centred column, the landing page's pill bar to make a link, a roomy list instead of a table, and clicks drawn as a glowing line. Bevelled or shaded buttons read as dated to the owner. They do not want a slug set at giant size.
 - The owner chose the final look from sketches: a logo that is a ring with a piece snipped out; a landing hero with one still, glowing arc like a horizon, with nothing moving and no other light, used on the landing hero only; and flat pill buttons, white for the main action, that gain a ring of blue light on hover. Bevelled or shaded buttons read as dated to the owner.
 
 ## Evidence on Hand

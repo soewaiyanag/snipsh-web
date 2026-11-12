@@ -21,14 +21,14 @@ Unresolved: the list cannot show a click count per row, because the contract's `
 
 ## Direction contract
 
-THESIS: A short link is a signal, and its clicks are the trace it leaves. The screen is a quiet dark tool with almost nothing on it. It refuses the dashboard of bordered cards, stat tiles and a table header.
+THESIS: The tool is the landing page's bar. Everything else is a quiet, roomy list. It refuses panels, table headers and stat tiles.
 
-OWN-WORLD: Night signal. A blue-black ground, white type, and thin white lines that plot clicks. One electric blue is the only colour: it fills the main button and glows behind the landing hero. Controls are pills; lists are hairline rows, never boxed cards. Sora carries every heading and label; link strings alone are set in Red Hat Mono because they are case-sensitive codes. A light theme exists for systems set to light and is the same design inverted.
+OWN-WORLD: Night signal. A blue-black ground, white type, one electric blue that appears as light, never as a fill. Controls are flat pills: the main action is white and gains a ring of blue light on hover; a press shrinks it slightly. Fields are dark with a hairline edge that glows blue on focus. Sora for everything, Red Hat Mono for link strings. Light theme is the same design inverted.
 
-STORY: The user sees where to paste, gets a short link they can copy at once, trusts the list as their own, and reads a link's clicks as one white line.
+STORY: The user pastes a URL and presses Shorten, sees the new short link at once with a Copy button, and later finds and manages links in a plain list.
 
-FIRST VIEWPORT: `/links` at 1440 wide. A header row: wordmark left, account email and Log out right. Below it one pill-shaped bar to make a link: a wide URL field, a slug field prefixed with the short domain, and a blue Shorten button. Under it the list as hairline rows: the short link in bold mono with Copy, the target URL muted and truncated, the created date, then Edit and Delete. No slug is ever set at display size. On a phone the bar's fields stack and each row becomes two lines. The signature move is the white trace: clicks are always drawn as a thin white line on the dark ground, on the details page and nowhere as decoration in the list. A newly made link's row holds a blue tint until the next action. Motion is 150 to 200ms state transitions only.
+FIRST VIEWPORT: A centred column about 48rem wide. A "Shorten a link" heading, the pill bar, a small "Choose your own slug" link that opens the slug field. Below, "Your links" with the count, then rows: the dimmed domain and bold slug, the destination underneath, a relative date, Copy, and edit and delete icons. On phones the date and actions sit on a line under the link. The details page uses the same column, with two plain figures and a clicks line that glows like the landing arc.
 
-FORM: the catalogue sleeve challenger (brand-identity-canon-saville-catalog-sleeve), chosen by the owner after four hands and steered by them: dark, futuristic, no yellow, no giant slug, with the spaceship.com hero as a reference. seed:e00b512afba57f79
+FORM: chosen by the owner from a sketch. seed:e00b512afba57f79
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
