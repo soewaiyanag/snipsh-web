@@ -10,7 +10,17 @@ Try it with the demo account: `demo@snipsh.com` / `password123`
 
 ![The SnipShort landing page: a dark page with the headline "Long links, cut short.", a paste bar, and a glowing blue arc like a horizon](docs/landing.png)
 
-This was written with [Claude Code](https://claude.com/claude-code).
+This was written with an AI assistant, Claude Opus 5.5.
+
+## Screenshots
+
+The links and click figures below come from the sample data in the mock API, not from real traffic.
+
+![The links page: a paste bar to shorten a URL, then a list of short links with Copy, edit and delete actions](docs/links.png)
+
+![A link's details page: its destination, three click figures, a clicks-per-day chart and a table of where clicks came from](docs/link-details.png)
+
+<img src="docs/link-details-mobile.png" alt="The link details page on a phone, 390px wide" width="320">
 
 ## The backend is the main feature
 
