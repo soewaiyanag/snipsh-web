@@ -2,6 +2,8 @@
 
 The frontend for SnipShort, a URL shortener at snipsh.com. Sign up, turn a long URL into a short link such as `snipsh.com/aB3x9`, and see how often each link is clicked.
 
+**Live demo:** https://snip-web-woad.vercel.app (runs on the mock API; log in with the demo account below).
+
 The backend is a separate NestJS API (`snip-api`). Until it is ready, this app runs against a mock API in the browser, so everything works without a server.
 
 ## Setup
