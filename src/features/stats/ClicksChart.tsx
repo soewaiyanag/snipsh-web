@@ -4,6 +4,8 @@ import { formatDay, formatNumber } from '@/lib/format'
 
 const CHART_HEIGHT = 260
 const MIN_TICK_GAP = 36
+// Keeps a few grid lines on a chart with no clicks, where the data alone gives none.
+const MIN_AXIS_TOP = 4
 
 type Day = LinkStats['perDay'][number]
 
@@ -28,6 +30,7 @@ export function ClicksChart({ days }: { days: Day[] }) {
             />
             <YAxis
               allowDecimals={false}
+              domain={[0, (highest: number) => Math.max(MIN_AXIS_TOP, highest)]}
               width={36}
               tickLine={false}
               axisLine={false}
