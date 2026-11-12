@@ -3,7 +3,8 @@
 **Long links, cut short.** SnipShort turns a long URL into a short link like `snipsh.com/aB3x9` and counts every click it gets.
 
 **Live:** https://snipsh-swya.vercel.app  
-**Backend API:** https://github.com/soewaiyanag/snipsh-api
+**Backend API:** https://github.com/soewaiyanag/snipsh-api  
+**API deployed at:** https://snipsh-api.onrender.com (work in progress)
 
 Try it with the demo account: `demo@snipsh.com` / `password123`
 
@@ -26,7 +27,7 @@ A short-link service is a backend. The pages in this repo are the front door; th
 
 The frontend never handles the redirect; the API does. See the [API repository](https://github.com/soewaiyanag/snipsh-api) for its endpoints, data model and how to run it.
 
-> **Status.** The API is still being built, so the live demo runs on a **mock API in the browser** (MSW) that follows the same contract. Links and accounts you create there reset when the page reloads. Click statistics and editing a link's address are drawn here from mock data and are not in the API yet.
+> **Status.** The API is deployed at https://snipsh-api.onrender.com, but only part of it is finished. The live demo does not use it yet: it runs on a **mock API in the browser** (MSW) that follows the same contract, so every screen works today. Links and accounts you create there reset when the page reloads. Click statistics and editing a link's address are drawn here from mock data and are not in the API yet.
 
 ## What the frontend does
 
