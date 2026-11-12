@@ -42,11 +42,11 @@ export function LinkRow({ link, isNew }: { link: Link; isNew: boolean }) {
   return (
     <li
       className={cn(
-        'flex flex-wrap items-center gap-x-4 gap-y-2 rounded-xl px-4 py-4 transition-colors focus-within:bg-card hover:bg-card',
+        'grid grid-cols-[minmax(0,1fr)] gap-y-2 rounded-xl px-4 py-4 transition-colors focus-within:bg-card hover:bg-card sm:flex sm:flex-wrap sm:items-center sm:gap-x-4',
         isNew && 'animate-settle',
       )}
     >
-      <div className="min-w-0 flex-1 basis-64">
+      <div className="min-w-0 sm:flex-1 sm:basis-64">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
           <RouterLink
             to={`/links/${link.id}`}
@@ -63,25 +63,28 @@ export function LinkRow({ link, isNew }: { link: Link; isNew: boolean }) {
           {link.url}
         </p>
       </div>
-      <p
-        className="text-sm whitespace-nowrap text-muted-foreground"
-        title={formatDate(link.createdAt)}
-      >
-        <span className="sr-only">Made </span>
-        {formatRelative(link.createdAt)}
-      </p>
-      <div className="flex items-center gap-1">
-        <CopyButton slug={link.slug} />
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => setIsEditing(true)}
-          aria-label={`Edit ${label}`}
-          title="Edit"
+      {/* Below sm the date and the actions share one line under the link. */}
+      <div className="flex items-center justify-between gap-3 sm:contents">
+        <p
+          className="text-sm whitespace-nowrap text-muted-foreground"
+          title={formatDate(link.createdAt)}
         >
-          <PencilIcon />
-        </Button>
-        <DeleteLinkButton link={link} iconOnly />
+          <span className="sr-only">Made </span>
+          {formatRelative(link.createdAt)}
+        </p>
+        <div className="flex items-center gap-1">
+          <CopyButton slug={link.slug} />
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setIsEditing(true)}
+            aria-label={`Edit ${label}`}
+            title="Edit"
+          >
+            <PencilIcon />
+          </Button>
+          <DeleteLinkButton link={link} iconOnly />
+        </div>
       </div>
     </li>
   )

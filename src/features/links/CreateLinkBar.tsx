@@ -44,7 +44,7 @@ export function CreateLinkBar({ onCreated }: { onCreated: (link: Link) => void }
   })
 
   return (
-    <form onSubmit={submit} noValidate className="grid justify-items-center gap-3">
+    <form onSubmit={submit} noValidate className="grid grid-cols-[minmax(0,1fr)] justify-items-center gap-3">
       <div className="flex w-full items-center gap-2 rounded-full border border-input bg-card p-1.5 pl-5 transition-[border-color,box-shadow] duration-200 hover:border-foreground/55 focus-within:border-ring focus-within:shadow-field has-aria-invalid:border-destructive">
         <label htmlFor="create-url" className="sr-only">
           Long URL

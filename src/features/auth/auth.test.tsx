@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react'
+import { screen, within } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import { DEMO_CREDENTIALS } from '@/mocks/demo'
 import { renderApp } from '@/test/render-app'
@@ -39,6 +39,8 @@ describe('auth redirect', () => {
     await logIn(user, DEMO_CREDENTIALS.password)
 
     await user.click(await screen.findByRole('button', { name: 'Log out' }))
+    expect(getToken()).not.toBeNull()
+    await user.click(within(await screen.findByRole('alertdialog')).getByRole('button', { name: 'Log out' }))
 
     expect(await screen.findByRole('link', { name: 'Log in' })).toBeInTheDocument()
     expect(router.state.location.pathname).toBe('/')

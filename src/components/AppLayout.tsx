@@ -1,4 +1,15 @@
 import { Link, Outlet, useNavigate } from 'react-router'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import { Toaster } from '@/components/ui/sonner'
 import { useAuth } from '@/features/auth/auth-context'
@@ -23,9 +34,23 @@ function Header() {
       {isAuthenticated ? (
         <div className="flex min-w-0 items-center gap-3">
           <span className="truncate text-sm text-muted-foreground">{email}</span>
-          <Button variant="outline" onClick={logOut}>
-            Log out
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="outline">Log out</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Log out of SnipShort?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  You will need to log in again to see your links.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Stay logged in</AlertDialogCancel>
+                <AlertDialogAction onClick={logOut}>Log out</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       ) : (
         <nav aria-label="Account" className="flex items-center gap-1 sm:gap-2">

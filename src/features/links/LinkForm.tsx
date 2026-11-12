@@ -64,7 +64,7 @@ export function LinkForm({
           {errors.root.message}
         </p>
       )}
-      <div className="grid items-start gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,22rem)_auto]">
+      <div className="grid items-start gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)_auto]">
         <Field
           label="Long URL"
           type="url"
@@ -87,8 +87,8 @@ export function LinkForm({
           {...register('slug')}
         />
         {/* The top margin lines the buttons up with the inputs, under the labels. */}
-        <div className="flex gap-2 md:mt-[1.375rem]">
-          <Button type="submit" disabled={isSubmitting} className="flex-1 md:flex-none">
+        <div className="flex gap-2 lg:mt-[1.375rem]">
+          <Button type="submit" disabled={isSubmitting} className="flex-1 lg:flex-none">
             {isSubmitting ? submittingLabel : submitLabel}
           </Button>
           {onCancel && (
