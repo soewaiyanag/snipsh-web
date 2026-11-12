@@ -2,7 +2,10 @@
 
 **Long links, cut short.** SnipShort turns a long URL into a short link like `snipsh.com/aB3x9` and counts every click it gets.
 
-**[Live demo](https://snipsh-swya.vercel.app)** · **[Backend API](https://github.com/soewaiyanag/snipsh-api)** · Log in with `demo@snipsh.com` / `password123`
+**Live:** https://snipsh-swya.vercel.app
+**Backend API:** https://github.com/soewaiyanag/snipsh-api
+
+Try it with the demo account: `demo@snipsh.com` / `password123`
 
 ![The SnipShort landing page: a dark page with the headline "Long links, cut short.", a paste bar, and a glowing blue arc like a horizon](docs/landing.png)
 
