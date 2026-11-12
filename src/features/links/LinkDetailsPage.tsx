@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, ExternalLinkIcon, PencilIcon } from 'lucide-react'
+import { ArrowLeftIcon, CircleCheckIcon, ClockIcon, ExternalLinkIcon, PauseCircleIcon, PencilIcon } from 'lucide-react'
 import { useState } from 'react'
 import { Link as RouterLink, useNavigate, useParams } from 'react-router'
 import { toast } from 'sonner'
@@ -64,6 +64,7 @@ export function LinkDetailsPage() {
   const isExpired = data.expiresAt ? new Date(data.expiresAt) < new Date() : false
   const isLive = data.isActive !== false && !isExpired
   const status = isExpired ? 'Expired' : data.isActive === false ? 'Paused' : 'Active'
+  const StatusIcon = isExpired ? ClockIcon : data.isActive === false ? PauseCircleIcon : CircleCheckIcon
 
   return (
     <div className="mx-auto max-w-3xl pt-6 sm:pt-10">
@@ -80,8 +81,8 @@ export function LinkDetailsPage() {
             <span className="font-normal text-muted-foreground">{SHORT_LINK_PREFIX}</span>
             {data.slug}
           </h1>
-          <span className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm font-medium">
-            <span className={cn('size-2 rounded-full', isLive ? 'bg-ring shadow-[0_0_8px_var(--primary)]' : 'bg-muted-foreground')} />
+          <span className="inline-flex items-center gap-1.5 text-sm font-medium">
+            <StatusIcon aria-hidden className={cn('size-4', isLive ? 'text-ring' : 'text-muted-foreground')} />
             {status}
           </span>
         </div>
